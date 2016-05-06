@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang='en' ng-app='app'>
+    <head>
+        <meta charset='utf-8'>
+        <title>Angular $resource demo</title>
+
+        <meta name='description' content=''>
+        <meta name='author' content=''>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+        <style>
+          .post-content {
+            border: 1px solid black;
+            width: 80%;
+            margin: 5% auto;
+            padding: 1%;
+          }
+
+          textarea {
+            width: 200px;
+            height: 100px;
+          }
+        </style>
+
+    </head>
+    <body>
+
+      <section ng-controller='BlogPostController as blog'>
+        <form ng-submit='blog.getPostDetails()'>
+          <p>Get post details</p>
+          <input type="text" ng-model='blog.postId' placeholder="Enter post ID">
+          <button>Submit</button>
+        </form>
+
+        <form ng-submit='blog.makeNewPost()'>
+          <p>Make a new Post</p>
+          <input type='text' ng-model='blog.newPost.title' placeholder="Post Title"><br>
+          <textarea ng-model='blog.newPost.content' placeholder="Post Content"></textarea>
+          <button>Submit</button>
+        </form>
+
+        <aside ng-show='blog.postDetail' class='post-content'>
+          <p>{{blog.postDetail.title}}</p>
+          <p>{{blog.postDetail.content}}</p>
+
+        </aside>
+
+        <ul>
+          <li ng-repeat='post in blog.posts | orderBy: "-date"'>
+            <p>{{post.title}}</p> ({{post.id}}) <button ng-click='blog.deletePost(post.id)'>X</button>
+          </li>
+        </ul>
+
+      </section>
+
+
+      <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-resource.js'></script>
+      <script src='js/app.module.js'></script>
+      <script src='js/blog-post.controller.js'></script>
+      <script src='js/blog-post.service.js'></script>
+
+    </body>
+</html>
